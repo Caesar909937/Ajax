@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax Test</title>
+<style type="text/css">
+span{
+	color:red;
+}
+</style>
+<script type="text/javascript">
+window.onload = function(){
+	//获取用户名的输入框
+	var in1 = document.fm1.username;
+	//焦点移失
+	in1.onblur = function(){
+		var name_v = in1.value;
+		//ajax发送请求，携带用户名
+		//1.创建xmlHttpRequest对象
+		var xmlHttp = new XMLHttpRequest();
+		//2.设置当请求状态发生变化时的处理
+		xmlHttp.onreadystatechange = function(){
+			 if(xmlHttp.readyState==4 && xmlHttp.status ==200){
+				var res = xmlHttp.responseText;
+				var s2 = document.getElementById("s2");
+				if(res == "T"){
+					s2.innerHTML = "<font color='green'>用户名可以使用</font>"
+				}else if(res == "F"){
+					s2.innerHTML = "请重新输入";
+				}
+			}  
+		}
+		//3.打开与服务器的连接
+		xmlHttp.open("GET","../Checkname?name=" + name_v,true);
+		//4.发送请求
+		xmlHttp.send();
+	}
+}
+</script>
+</head>
+<body>
+	<form action="" name="fm1">
+		<input type="text" name="username">
+		<span id="s2"></span>
+	</form>
+</body>
+</html>
